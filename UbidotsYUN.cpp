@@ -88,7 +88,9 @@ float Ubidots::getValue(String id){
     float num;
     char c[400];
     int i = 0;
-    String command = "curl \"http://things.ubidots.com/api/v1.6/variables/";
+    String command = "curl \"";
+    command += SERVER;
+    command += "variables/";
     command += id;
     command += "/values?page_size=1\&token=";
     command += _token;
@@ -143,7 +145,9 @@ void Ubidots::sendAll() {
       command += (val+i)->idValue;
       command += "\",\"context\":{";
       command += (val + i)->context;
-      command += "}}' http://things.ubidots.com/api/v1.6/variables/";
+      command += "}}' ";
+      command += SERVER;
+      command += "variables/";
       command += (val+i)->idName;
       command += "/values/?token=";
       command += _token;

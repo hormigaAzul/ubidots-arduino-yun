@@ -28,12 +28,8 @@ Modified by Kosme - Hormiga Azul
 #define _UbidotsYUN_H_
 
 
-#define SERVER "translate.ubidots.com"
-#define PORT "9010"
+#define SERVER "http://things.ubidots.com/api/v1.6/"
 #define MAX_VALUES 5
-#define USER_AGENT "YUN"
-#define VERSION "/1.0"
-
 
 
 #include <Process.h>
