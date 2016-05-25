@@ -143,9 +143,14 @@ void Ubidots::sendAll() {
     {
       command = "curl -X POST -H \"Content-Type: application/json\" -d '{\"value\":\"";
       command += (val+i)->idValue;
-      command += "\",\"context\":{";
-      command += (val + i)->context;
-      command += "}}' ";
+      command += "\"";
+      if((val+i)->context!=NULL)
+      {
+        command += ",\"context\":{";
+        command += (val + i)->context;
+        command += "}";
+      }
+      command += "}' ";
       command += SERVER;
       command += "variables/";
       command += (val+i)->idName;
