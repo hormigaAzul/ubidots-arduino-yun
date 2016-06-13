@@ -54,7 +54,6 @@ void Ubidots::setDataSourceName(char *name) {
  * This function start the YUN device
  */
 void Ubidots::init(){
-
     pinMode(13, OUTPUT);
     digitalWrite(13, LOW);
     Bridge.begin();
@@ -74,7 +73,9 @@ float Ubidots::parseValue(char *body){
   bodyPosinit = 9 + raw.indexOf("\"value\":");
   bodyPosend = raw.indexOf(", \"timestamp\"");
   raw.substring(bodyPosinit,bodyPosend).toCharArray(reply, 25);
-  Serial.println(reply);
+  #ifdef DEBUG
+    Serial.println(reply);
+  #endif
   num = atof(reply);
   return num;
 }
@@ -95,25 +96,35 @@ float Ubidots::getValue(String id){
     command += "/values?page_size=1\&token=";
     command += _token;
     command += "\"";
-    /*Serial.println(token);
-    Serial.println(url);
-    Serial.println(all);*/
+    /*#ifdef DEBUG
+      Serial.println(token);
+      Serial.println(url);
+      Serial.println(all);
+    #endif */
     _client.runShellCommand(command);
     while(!_client.available());
     while (_client.available()&& i<400) {
         c[i] = _client.read();
         i++;
-        //Serial.print(c);
+        /*#ifdef DEBUG
+          Serial.print(c);
+        #endif*/
     }
     c[i] = '\0';
     while (_client.available()) {
         _client.read();
-        //Serial.print(c);
+        /*#ifdef DEBUG
+          Serial.print(c);
+        #endif*/
     }
-    Serial.println(command);
+    #ifdef DEBUG
+      Serial.println(command);
+    #endif
     i = 0;
     num = parseValue(c);
-    Serial.flush();
+    #ifdef DEBUG
+      Serial.flush();
+    #endif
     return num;
 
 }
@@ -156,10 +167,14 @@ void Ubidots::sendAll() {
       command += (val+i)->idName;
       command += "/values/?token=";
       command += _token;
-      SerialUSB.println(command);
+      #ifdef DEBUG
+        SerialUSB.println(command);
+      #endif
       _client.runShellCommand(command);
       while (_client.running());
-      Serial.flush();
+      #ifdef DEBUG
+        Serial.flush();
+      #endif
       command = "";
     }
     currentValue = 0;

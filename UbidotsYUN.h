@@ -27,6 +27,8 @@ Modified by Kosme - Hormiga Azul
 #ifndef _UbidotsYUN_H_
 #define _UbidotsYUN_H_
 
+//If commented, allows to use the Serial port for communication with another device
+#define DEBUG
 
 #define SERVER "http://things.ubidots.com/api/v1.6/"
 #define MAX_VALUES 5
@@ -53,7 +55,7 @@ class Ubidots {
    private:
       char* _token;
       char* _dsName;
-      char*_dsTag;
+      char* _dsTag;
       uint8_t currentValue;
       float parseValue(char *body);
       Value * val;
